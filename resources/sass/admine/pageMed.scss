@@ -1,0 +1,515 @@
+.calendar {
+    height: 350;
+    width: 400px;
+    background-color: white;
+    border-radius: 30px;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    //left: 3px;
+    top: 8%;
+    border: 10px outset gainsboro;
+    float: left;
+    display: grid;
+    place-items: center;
+    /* transform: scale(1.25); */
+}
+
+.light .calendar {
+    box-shadow: black;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 25px;
+    font-weight: 600;
+    color: var(--sidebar-color);
+    padding: 10px;
+}
+
+.calendar-body {
+    padding: 5px;
+}
+
+.calendar-week-day {
+    height: 40px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    font-weight: 600;
+}
+
+.calendar-week-day div {
+    display: grid;
+    place-items: center;
+    color: var(--body-color);
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    color: black;
+}
+
+.calendar-days div {
+    width: 48px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    position: relative;
+    cursor: pointer;
+    animation: to-top 1s forwards;
+    /* border-radius: 50%; */
+}
+
+.calendar-days div span {
+    position: absolute;
+}
+
+.calendar-days div:hover span {
+    transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
+}
+
+.calendar-days div span:nth-child(1),
+.calendar-days div span:nth-child(3) {
+    width: 2px;
+    height: 0;
+    background-color: var(--sidebar-color);
+}
+
+.calendar-days div:hover span:nth-child(1),
+.calendar-days div:hover span:nth-child(3) {
+    height: 100%;
+}
+
+.calendar-days div span:nth-child(1) {
+    bottom: 0;
+    left: 0;
+}
+
+.calendar-days div span:nth-child(3) {
+    top: 0;
+    right: 0;
+}
+
+.calendar-days div span:nth-child(2),
+.calendar-days div span:nth-child(4) {
+    width: 0;
+    height: 2px;
+    background-color: var(--sidebar-color);
+}
+
+.calendar-days div:hover span:nth-child(2),
+.calendar-days div:hover span:nth-child(4) {
+    width: 100%;
+}
+
+.calendar-days div span:nth-child(2) {
+    top: 0;
+    left: 0;
+}
+
+.calendar-days div span:nth-child(4) {
+    bottom: 0;
+    right: 0;
+}
+
+.calendar-days div:hover span:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.calendar-days div:hover span:nth-child(3) {
+    transition-delay: 0.4s;
+}
+
+.calendar-days div:hover span:nth-child(4) {
+    transition-delay: 0.6s;
+}
+
+.calendar-days div.curr-date,
+.calendar-days div.curr-date:hover {
+    background-color: var(--sidebar-color);
+    color: black;
+    border-radius: 50%;
+}
+
+.calendar-days div.curr-date span {
+    display: none;
+}
+
+.month-picker {
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.month-picker:hover {
+    background-color: var(--sidebar-color);
+    color: white;
+}
+
+.year-picker {
+    display: flex;
+    align-items: center;
+}
+
+.year-change {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    //margin: 5 15px;
+    cursor: pointer;
+}
+
+.year-change:hover {
+    background-color: var(--sidebar-color);
+    color: white;
+}
+
+.calendar-footer {
+    padding: 5px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.toggle {
+    display: flex;
+}
+
+.toggle span {
+    margin-right: 10px;
+    color: var(--sidebar-color);
+}
+
+.dark-mode-switch {
+    position: relative;
+    width: 48px;
+    height: 25px;
+    border-radius: 14px;
+    background-color: gainsboro;
+    cursor: pointer;
+}
+
+.dark-mode-switch-ident {
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    background-color: var(--sidebar-color);
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: left 0.2s ease-in-out;
+}
+
+.dark .dark-mode-switch .dark-mode-switch-ident {
+    top: 2px;
+    left: calc(2px + 50%);
+}
+
+.month-list {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: white;
+    padding: 5px;
+    grid-template-columns: repeat(3, auto);
+    gap: 5px;
+    display: grid;
+    transform: scale(1.5);
+    visibility: hidden;
+    pointer-events: none;
+    border: outset;
+}
+
+.month-list.show {
+    transform: scale(1);
+    visibility: visible;
+    pointer-events: visible;
+    transition: all 0.2s ease-in-out;
+}
+
+.month-list>div {
+    display: grid;
+    place-items: center;
+}
+
+.month-list>div>div {
+    width: 100%;
+    padding: 0px 10px;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    color: var(--sidebar-color);
+}
+
+.month-list>div>div:hover {
+    background-color: var(--sidebar-color);
+    color: white;
+}
+
+@keyframes to-top {
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.accMed {
+    align-items: center;
+    position: fixed;
+    left: 190px;
+    top: 15%;
+    width: calc(100% - 190px);
+    //width: 400px;
+    height: 100%;
+    //height: calc(100% - 100px);
+    border: #f0f0f0;
+    background-color: white;
+    align-items: center;
+    text-align: center;
+    transition: all 0.4s ease;
+    z-index: 32;
+}
+
+.sidebar.fermer~.accMed {
+    left: 290px;
+    //left: 110px;
+    width: calc(100% - 290px);
+}
+
+
+.infoMed {
+   // height: 520px;
+    display: flex;
+    //place-items: center;
+    font-family: var(--font-family);
+   // background-color: gainsboro;
+    width: 650px;
+    position: relative;
+    border-radius: 30px;
+    top: 1%;
+    left: 2px;
+    z-index: 33;
+    float: left;
+}
+.imagepro{
+    top: 2%;
+    left: 2px;
+    height: 200px;
+    float: left;
+}
+.infoMed table{
+    height: 200px;
+    width: 100%;
+    display: flex;
+    text-align: left;
+}
+.tdtitr{
+    width: 150px;
+}
+.tdinf{
+  //  width: 100%;
+    border-radius: 20%;
+    font-weight: 700;
+    font-family: 'Times New Roman';
+   // background-color: gainsboro;
+}
+.photo{
+    height: 350px;
+    //display: flex;
+    place-items: center;
+    font-family: var(--font-family);
+    width: 650px;
+    position: absolute;
+    border-radius: 30px;
+    left: 120px;
+    z-index: 35;
+    margin-top: 250px;
+    transition: all 0.4s ease;
+}
+.sidebar.fermer~.photo {
+    left: 290px;
+    //left: 110px;
+    width: calc(100% - 700px);
+}
+.carousel{
+    height: 100%;
+    width: 100%;
+    // place-items: center;
+    position: fixed;
+}
+.d-block{
+    width: 300px;
+    height: 400px;
+}
+
+// page med
+.pageMed {
+    align-items: center;
+    position: fixed;
+    left: 140px;
+    top: 13%;
+    width: calc(100% - 140px);
+    //width: 400px;
+    height: 100%;
+    //height: calc(100% - 100px);
+    border: #f0f0f0;
+    background-color: white;
+    // align-items: center;
+    // text-align: center;
+    transition: all 0.4s ease;
+    z-index: 31;
+    place-items: top;
+}
+
+.sidebar.fermer~.pageMed {
+    left: 260px;
+    //left: 110px;
+    width: calc(100% - 260px);
+}
+
+// onglet
+.tablebar td{
+    background-color: var(--sidebar-color);
+    margin-top: 15px;
+    font-weight: 700;
+    font-family: 'Times New Roman';
+    border-radius: 20px;
+    text-align: center;
+    border: 10px outset white;
+    font-size: 800;
+    height: 10px;
+}
+.tablebar td a{
+    text-decoration: none;
+    color: white;
+}
+.sli{
+    color: black;
+    font-size: 500;
+    font-weight: 700;
+
+}
+.sli-text{
+    color: var(--sidebar-color);
+    font-weight: 600;
+}
+.pageMedCon {
+    align-items: center;
+    position: fixed;
+    left: 140px;
+    top: 13%;
+    width: calc(100% - 140px);
+    //width: 400px;
+    height: 100%;
+    //height: calc(100% - 100px);
+    border: #f0f0f0;
+    background-color: white;
+    // align-items: center;
+    // text-align: center;
+    transition: all 0.4s ease;
+    z-index: 31;
+    place-items: center;
+}
+
+.sidebar.fermer~.pageMedCon {
+    left: 260px;
+    //left: 110px;
+    width: calc(100% - 260px);
+}
+
+// css Scanner
+
+// consultation
+
+.pageMedConsultation {
+    align-items: center;
+    position: fixed;
+    left: 140px;
+    top: 20%;
+    width: calc(100% - 140px);
+    //width: 400px;
+    height: 100%;
+    //height: calc(100% - 100px);
+    border: #f0f0f0;
+    background-color: white;
+    // align-items: center;
+    // text-align: center;
+    transition: all 0.4s ease;
+    z-index: 31;
+    place-items: center;
+}
+
+.sidebar.fermer~.pageMedConsultation {
+    left: 260px;
+    //left: 110px;
+    width: calc(100% - 260px);
+}
+
+.pageMedConDossier {
+    align-items: center;
+    position: fixed;
+    left: 140px;
+    top: 20%;
+    width: calc(100% - 140px);
+    //width: 400px;
+    height: 100%;
+    //height: calc(100% - 100px);
+    border: #f0f0f0;
+    background-color: white;
+    // align-items: center;
+    // text-align: center;
+    transition: all 0.4s ease;
+    z-index: 31;
+    place-items: center;
+}
+
+.sidebar.fermer~.pageMedConDossier {
+    left: 260px;
+    //left: 110px;
+    width: calc(100% - 260px);
+}
+.pageMedConDossierCons {
+    align-items: center;
+    position: fixed;
+    left: 50%;
+    top: 20%;
+    width: calc(100% - 50%);
+    //width: 400px;
+    height: 100%;
+    //height: calc(100% - 100px);
+    border: #f0f0f0;
+    background-color: white;
+    // align-items: center;
+    // text-align: center;
+    transition: all 0.4s ease;
+    z-index: 31;
+    place-items: center;
+}
+
+.sidebar.fermer~.pageMedConDossierCons {
+    left: 800px;
+    //left: 110px;
+    width: calc(100% - 800px);
+}
+.bk{
+    background-color: var(--sidebar-color);
+    color: white;
+}
+.cl{
+    color: var(--sidebar-color);
+}
