@@ -16,7 +16,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
+        'guard' => 'api',
         'passwords' => 'users',
     ],
 
@@ -42,9 +42,13 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'personel' => [
-            'driver' => 'session',
-            'provider' => 'personels',
+        // 'personel' => [
+        //     'driver' => 'session',
+        //     'provider' => 'personels',
+        // ],
+        'api' => [
+            'driver' => 'jwt', // si vous utilisez JWT pour les API
+            'provider' => 'users',
         ],
         // 'medecin' => [
         //     'driver' => 'session',
@@ -74,10 +78,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-        'api' => [
-            'driver' => 'jwt',
-            'provider' => 'users',
-        ],
+        // 'api' => [
+        //     'driver' => 'jwt',
+        //     'provider' => 'users',
+        // ],
         // 'personels' => [
         //     'driver' => 'eloquent',
         //     'model' => App\Models\personel::class,

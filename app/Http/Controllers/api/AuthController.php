@@ -10,6 +10,24 @@ use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\JWT;
 
+
+
+use App\Models\RV;
+
+use App\Models\Medecin;
+use App\Models\Secretaire;
+use Illuminate\Support\Facades\DB;
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AbsonController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\medecinController;
+use App\Http\Controllers\PatientController;
+use App\Http\Controllers\caissierController;
+use App\Http\Controllers\secretaireController;
+use App\Models\PersoQueu;
+use App\Models\Consultation;
 class AuthController extends Controller
 {
     //
@@ -57,22 +75,29 @@ class AuthController extends Controller
         $token = JWTAuth::attempt($data);
 
         if(!empty($token)){
-            return response()->json([
-                "status" => 200,
-                "message" => "User connecter avec succes",
-                "token" => $token,
-                // "user" => Auth::user()->role,
-                "user" => auth()->user()
 
-            ]);
-        }else{
-            return response()->json([
-                "status" => false,
-                 "message" => "L'mail ou mot de passe incorrecte",
-                "token" => null,
-                "data" => $data
-            ]);
-        }
+                if (Auth::user()->role == 'ADMIN') {
+                    return response()->json([
+                        "status" => 200,
+                        "message" => "User connecter avec succes",
+                        "token" => $token,
+                        "url" =>'/espaceAdministrateur',
+                        "user" =>Auth::user()->role
+
+                    ]);
+                    // return view('forAdmin.accueil');
+                } elseif (Auth::user()->role == 'MEDECIN' || Auth::user()->role == 'MEDECINCHEF') {
+                        return response()->json([
+                            "status" => 200,
+                            "user" =>Auth::user()->role,
+                            "token" => $token,
+                            "url" =>'/espaceMedecin',
+
+                        ]);
+                        // return view('forMedecin.accueil', compact('rv', 'secretaires','med', 'daterv', 'nbrRV', 'nbrCON', 'k', 'liste', 'personelmed'));
+                    }
+                    // return redirect('/acc');
+                }
     }
 
 

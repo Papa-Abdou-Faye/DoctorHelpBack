@@ -107,7 +107,7 @@ Route::get('/stricture', [AdminController::class, 'stricture'])->name('stricture
 Route::post('/insStric', [AdminController::class, 'ajouterStricture'])->name('ajouterStricture');
 
 // route medcin
-Route::get('/acc', [medecinController::class, 'accMed'])->name('acc.med')->middleware('auth')->middleware('personnelSoignant');
+// Route::get('/acc', [medecinController::class, 'accMed'])->name('acc.med')->middleware('auth')->middleware('personnelSoignant');
 Route::get('/accMedAvecCalretour', [medecinController::class, 'accMedAvecCalretour'])->middleware('auth');
 Route::get('/accAvecCal', [medecinController::class, 'accMedAvecCal'])->middleware('auth');
 Route::get('/book', [medecinController::class, 'Book'])->name('book')->middleware('auth')->middleware('personnelSoignant');

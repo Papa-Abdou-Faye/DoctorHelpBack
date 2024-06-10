@@ -156,7 +156,7 @@ class AdminController extends Controller
             "status" => 200,
             // "message" => "User connecter avec succes",
             // "user" => auth()->user(),
-            // "strictures" => $strictures
+            "strictures" => $strictures
         ]);
         // return view('forAdmin.stricture',compact('strictures'));
     }
