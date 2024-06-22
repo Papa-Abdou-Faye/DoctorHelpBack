@@ -73,6 +73,7 @@ class medecinController extends Controller
                 "personelmed" => $personelmed,
 
             ]);
+            return response()->json(["status" => 200,]);
             // return view('forMedecin.accueil', compact('rv', 'secretaires','med', 'daterv', 'nbrRV', 'nbrCON', 'k', 'liste', 'personelmed'));
         }
     }

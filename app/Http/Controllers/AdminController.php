@@ -89,7 +89,7 @@ class AdminController extends Controller
             'date_nai' => $request->date_nai,
             'telephone' => $request->tel,
             'email' => $request->email,
-            'stricture_id' => $request->stricture,
+            'stricture_id' => $request->structure,
         ]);}elseif( $request->role == 'SECRETAIRE'){
             Secretaire::create([
                 'user_id'=> $user->id,
@@ -98,22 +98,32 @@ class AdminController extends Controller
                 'adresse'=> $request->adresse,
                 'sexe'=> $request->sexe,
                 'telephone' => $request->tel,
-                'stricture_id' => $request->stricture,
+                'stricture_id' => $request->structure,
             ]);
         }
-        if(Auth::user()->role == 'MEDECIN' || Auth::user()->role== 'MEDECINCHEF'){
-            return redirect('/acc')->with('succes','Le Personnel Soignant a ete enregistre.');
-        }
-            return redirect('/insMed')->with('succes','Le Personnel Soignant a ete enregistre.');
+        return response()->json([
+            "status" => 200,
+            "message" => "medecin enregistrer avec success",
+            "user" => $user,
+        ]);
+        // if(Auth::user()->role == 'MEDECIN' || Auth::user()->role== 'MEDECINCHEF'){
+        //     return redirect('/acc')->with('succes','Le Personnel Soignant a ete enregistre.');
+        // }
+
+            // return redirect('/insMed')->with('succes','Le Personnel Soignant a ete enregistre.');
     }
     // public function regMed(){
 
     //     return redirect('/medreg')->with('insMed', 'inscrir medecin');
     // }
 
-    public function listMed(){
-        $personnel = Medecin::join('users', 'users.id', '=', 'medecins.user_id')->where('users.supprimer', '=', false)->get();
-        return view('forAdmin.personnel', compact('personnel'));
+    public function listeMedecin(){
+        $listeMedecin = Medecin::join('users', 'users.id', '=', 'medecins.user_id')->where('users.supprimer', '=', false)->get();
+        return response()->json([
+            "status" => 200,
+            "listeMedecin" => $listeMedecin
+        ]);
+        // return view('forAdmin.personnel', compact('listeMedecin'));
     }
     public function page(){
         return view('forAdmin.qrcode');
@@ -121,15 +131,22 @@ class AdminController extends Controller
 
     public function generer(){
         for ($i=0; $i < 40 ; $i++) {
-            # code...
             QrCode::create(['qrcodeContenu'=> generateBarcodeNumber() ]);
         }
-
-        return redirect('/pageqrcode')->with('succes','les QrCodes ont ete generer avec succes');
+        $allqrcode = QrCode::all();
+        return response()->json([
+                'status' => 200,
+                'qrCodes' =>$allqrcode,
+        ]);
+        // return redirect('/pageqrcode')->with('succes','les QrCodes ont ete generer avec succes');
     }
     public function qrLister(){
-        $qrcodes = QrCode::all();
-        return view('forAdmin.listeQrcode' , ['qrcodes'=>  $qrcodes]);
+        $allqrcode = QrCode::all();
+        return response()->json([
+            'status' => 200,
+            'QrCodes' =>$allqrcode,
+        ]);
+        // return view('forAdmin.listeQrcode' , ['qrcodes'=>  $qrcodes]);
     }
 
     // anomali
@@ -150,7 +167,7 @@ class AdminController extends Controller
         return view('forAdmin.anomalie', ['pathologies'=>$ano]);
     }
 
-    public function stricture(){
+    public function structure(){
         $strictures = Stricture::all();
         return response()->json([
             "status" => 200,

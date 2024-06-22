@@ -93,7 +93,7 @@ Route::post('/adAcc', [AdminController::class, 'accueil'])->name('acc.admin')->m
 Route::get('/insMed', [AdminController::class, 'insMed'])->name('inscrir.med');
 Route::post('/insMedecin', [AdminController::class, 'ajouterMedecin'])->name('enregisterMed.admin');
 //  Route::get('/insmed', [AdminController::class, 'regMed'])->name('regMed.admin');
-Route::get('/listMed', [AdminController::class, 'listMed'])->name('list.med')->middleware('auth')->middleware('admin');
+Route::get('/listMed', [AdminController::class, 'listeMedecin'])->name('list.med')->middleware('auth')->middleware('admin');
 Route::get('/pageqrcode', [AdminController::class, 'page'])->name('pageqrcode.admin')->middleware('auth')->middleware('admin');
 Route::post('/qrcode', [AdminController::class, 'generer'])->name('qrcode_generer.admin')->middleware('auth')->middleware('admin');
 Route::get('/qrList', [AdminController::class, 'qrLister'])->name('qrList.admin')->middleware('auth')->middleware('admin');

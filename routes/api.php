@@ -28,10 +28,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // Espace Administrateur
+                            //  =========================Cabient ======================
 Route::post('/ajouterstricture', [AdminController::class, 'ajouterStricture'])->name('ajouterStricture');
-Route::get('/strictur', [AdminController::class, 'stricture'])->name('Stricture');
-
-
+Route::get('/structure', [AdminController::class, 'structure'])->name('Structure');
+                            //  =========================Inscription ======================
+Route::post('/ajouterPersonnelSoignant', [AdminController::class, 'ajouterMedecin'])->name('enregisterMedecin.admin');
+                            // =========================cabinet chef ======================
+Route::get('/listePersonnel', [AdminController::class, 'listeMedecin'])->name('list.med');
+                            // =========================Qrcode  ======================
+Route::get('/genererQrCode', [AdminController::class, 'generer'])->name('pageqrcode.admin');
+Route::get('/getQrCode', [AdminController::class, 'qrLister'])->name('pageqrcode.admin');
 
 // Espace Medecin
 //                              =========================Accueil ======================
